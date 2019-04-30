@@ -1,0 +1,38 @@
+{
+  "name": "rest-ahk",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "src/app.js",
+  "scripts": {
+    "lint": "eslint ./src",
+    "test": "mocha --require @babel/register --exit",
+    "dev": "nodemon --inspect --exec babel-node ./src/app.js",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/app.js",
+    "start": "npm run build && npm run serve"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "del": "^4.1.1",
+    "express": "^4.16.4",
+    "express-queue": "0.0.12",
+    "helmet": "^3.16.0",
+    "md5": "^2.2.1",
+    "memory-cache": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.18.11"
+  }
+}
