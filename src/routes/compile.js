@@ -2,14 +2,14 @@ import express from 'express';
 import expressQueue from 'express-queue';
 import mcache from 'memory-cache';
 
-import { promisify } from 'util';
 import { promises as fs } from 'fs';
+import proc from 'child_process';
 
 import md5 from 'md5';
 import del from 'del';
 
 // TODO: convert to import
-const exec = promisify(require('child_process').exec);
+// const proc = require('child_process');
 
 const CACHE_TIMEOUT = process.env.CACHE_TIMEOUT || 60000;
 const BUILD_TIMEOUT = process.env.BUILD_TIMEOUT || 10000;
@@ -28,11 +28,17 @@ router.post('/', queueMw, async (req, res) => {
     try {
       await fs.writeFile(`/tmp/${id}.ahk`, req.body);
 
-      await exec(`xvfb-run -a wine Ahk2Exe.exe /in /tmp/${id}.ahk`, { timeout: BUILD_TIMEOUT });
+      await new Promise(async (resolve) => {
+        proc.exec(`xvfb-run -a wine Ahk2Exe.exe /in /tmp/${id}.ahk`, { timeout: BUILD_TIMEOUT }, (err, stout, sterr) => {
+          resolve(err ? stout : sterr);
+        });
+      });
 
       data = await fs.readFile(`/tmp/${id}.exe`);
+
       mcache.put(id, data, CACHE_TIMEOUT);
     } catch (err) {
+      console.error(err.message);
       res.status(400).send({ error: { code: err.code || -1, message: err.message || 'unknown' } });
       return;
     } finally {
@@ -42,7 +48,6 @@ router.post('/', queueMw, async (req, res) => {
 
   // cannot use res.download(`/tmp/${id}.exe`); due to cached buffer
   res.sendFileBuffer(`${id}.exe`, data);
-  // res.download("/home/zvecr/Desktop/test.exe");
 });
 
 export default {

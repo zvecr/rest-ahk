@@ -1,8 +1,7 @@
-/* global describe it */
+/* eslint-env mocha */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../src/app';
-// import assert from 'assert';
 
 chai.should();
 chai.use(chaiHttp);
