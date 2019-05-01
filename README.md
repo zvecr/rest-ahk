@@ -69,7 +69,16 @@ npm run start
 npm run test
 ```
 
-### Lints files
+### Lint files
 ```bash
 npm run lint
+```
+
+## Docker
+A simple workflow to package the service for production.
+
+```bash
+docker build --rm -f "Dockerfile" -t rest-ahk:latest .
+
+docker run --rm -it -p 1234:1234/tcp ahk-docker:latest
 ```
