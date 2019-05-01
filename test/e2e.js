@@ -6,7 +6,7 @@ import server from '../src/app';
 chai.should();
 chai.use(chaiHttp);
 
-describe('Status endpoint', () => {
+describe('IT::Status endpoint', () => {
   it('should report zero when idle', (done) => {
     chai.request(server).get('/status')
       .end((err, res) => {

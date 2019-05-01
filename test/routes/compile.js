@@ -4,6 +4,7 @@ import httpMocks from 'node-mocks-http';
 import { promises as fs } from 'fs';
 import proc from 'child_process';
 import sinon from 'sinon';
+import ee from 'events';
 import compile from '../../src/routes/compile';
 
 chai.should();
@@ -14,10 +15,11 @@ return
 `;
 const ID = '3ab771baa15b807fc028f9766eb111b0';
 
-describe('Compile route', () => {
+describe('Compile endpoint', () => {
   let exec;
   let fswriteFile;
   let fsreadFile;
+
   beforeEach(() => {
     fswriteFile = sinon.stub(fs, 'writeFile');
     fsreadFile = sinon.stub(fs, 'readFile').returns(Buffer.from('<EXE DATA>'));
@@ -28,31 +30,53 @@ describe('Compile route', () => {
     sinon.restore();
   });
 
+  it('should reject a empty request', (done) => {
+    const res = httpMocks.createResponse({
+      eventEmitter: ee.EventEmitter,
+    });
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      url: '/',
+      body: '',
+    });
+    // TODO: undo bodge with body producing {}
+    req.body = '';
+
+    res.once('end', () => {
+      res.statusCode.should.equal(400);
+
+      done();
+    });
+
+    compile.router.handle(req, res);
+  });
+
   it('should convert a valid request', (done) => {
-    const response = httpMocks.createResponse();
-    const request = httpMocks.createRequest({
+    const res = httpMocks.createResponse({
+      eventEmitter: ee.EventEmitter,
+    });
+    const req = httpMocks.createRequest({
       method: 'POST',
       url: '/',
       body: SCRIPT,
     });
 
-    // TODO: use for negative test case
-    // response.on('end', () => {
-    //   response._getData().should.equal('world');
-    //   done();
-    // });
+    res.sendFileBuffer = (name, data) => {
+      name.should.be.equal(`${ID}.exe`);
+      data.should.be.instanceof(Buffer);
 
-    response.sendFileBuffer = (name, data) => {
+      // boilerplate to behave as real express middleware
+      res.status(200).send();
+    };
+
+    res.once('end', () => {
       sinon.assert.calledWith(fswriteFile, `/tmp/${ID}.ahk`, SCRIPT);
       sinon.assert.calledWith(exec, `xvfb-run -a wine Ahk2Exe.exe /in /tmp/${ID}.ahk`);
       sinon.assert.calledWith(fsreadFile, `/tmp/${ID}.exe`);
 
-      name.should.be.equal(`${ID}.exe`);
-      data.should.be.instanceof(Buffer);
-
       done();
-    };
+    });
 
-    compile.router.handle(request, response);
+    compile.router.handle(req, res);
   });
 });
