@@ -6,7 +6,7 @@ import compile from './routes/compile';
 import sendFileBuffer from './sendFileBuffer';
 
 // environment defaults
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // expressjs constants
 const app = express();

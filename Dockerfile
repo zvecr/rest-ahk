@@ -31,7 +31,7 @@ RUN npm prune
 
 USER node
 
-ENV PORT=1234
+ENV PORT=8080
 EXPOSE $PORT
 
 CMD [ "npm", "run", "serve" ]
