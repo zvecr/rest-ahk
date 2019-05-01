@@ -20,7 +20,7 @@ describe('Compile route', () => {
   let fsreadFile;
   beforeEach(() => {
     fswriteFile = sinon.stub(fs, 'writeFile');
-    fsreadFile = sinon.stub(fs, 'readFile');
+    fsreadFile = sinon.stub(fs, 'readFile').returns(Buffer.from('<EXE DATA>'));
     exec = sinon.stub(proc, 'exec').yields(undefined, undefined);
   });
 
@@ -49,6 +49,7 @@ describe('Compile route', () => {
 
       name.should.be.equal(`${ID}.exe`);
       data.should.be.instanceof(Buffer);
+
       done();
     };
 
