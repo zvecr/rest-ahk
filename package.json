@@ -5,7 +5,9 @@
   "private": true,
   "main": "src/app.js",
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "npm run lint:js && npm run lint:md",
+    "lint:js": "eslint ./src",
+    "lint:md": "remark .",
     "test": "mocha --require @babel/register --recursive --exit",
     "dev": "nodemon --inspect --exec babel-node ./src/app.js",
     "build": "babel src --out-dir dist",
@@ -35,6 +37,8 @@
     "mocha": "^6.1.4",
     "node-mocks-http": "^1.7.3",
     "nodemon": "^1.18.11",
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-recommended": "^3.0.2",
     "sinon": "^7.3.2"
   }
 }

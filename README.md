@@ -10,10 +10,10 @@ REST service for compiling AutoHotkey scripts `.ahk` to `.exe`
 Behind the scenes, `wine` and `xvfb` are used to run `Ahk2Exe`, producing a light linux based container, deployable almost anywhere.
 
 ## Dependencies
-*  nodejs (and npm)
-*  wine
-*  xvfb
-*  Ahk2Exe (Installed to the wine path)
+* nodejs (and npm)
+* wine
+* xvfb
+* Ahk2Exe (Installed to the wine path)
 
 ## Examples
 The following examples assume either node is running the project or the `rest-ahk` docker container is running locally.
