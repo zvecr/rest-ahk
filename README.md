@@ -49,7 +49,7 @@ For convenience a `.nvmrc` file has been provided at the root of the project dir
 npm install
 ```
 
-#### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development
 ```bash
 npm run dev
 ```
