@@ -9,10 +9,10 @@
     "lint:js": "eslint ./src",
     "lint:md": "remark .",
     "test": "mocha --require @babel/register --recursive --exit",
-    "dev": "nodemon --inspect --exec babel-node ./src/app.js",
+    "serve": "nodemon --inspect --exec babel-node ./src/app.js",
     "build": "babel src --out-dir dist",
-    "serve": "node dist/app.js",
-    "start": "npm run build && npm run serve"
+    "prod": "node dist/app.js",
+    "start": "npm run build && npm run prod"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

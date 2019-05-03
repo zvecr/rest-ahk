@@ -51,7 +51,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```bash
-npm run dev
+npm run serve
 ```
 
 ### Compiles and minifies for production
@@ -75,7 +75,7 @@ npm run lint
 ```
 
 ## Docker
-A simple workflow to package the service for production.
+A simple workflow to package (and run) the service for production.
 
 ```bash
 docker build --rm -f "Dockerfile" -t rest-ahk:latest .
