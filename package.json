@@ -19,7 +19,7 @@
     "del": "^4.1.1",
     "express": "^4.16.4",
     "express-queue": "0.0.12",
-    "helmet": "^3.16.0",
+    "helmet": "^3.18.0",
     "md5": "^2.2.1",
     "memory-cache": "^0.2.0"
   },
