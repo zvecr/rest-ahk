@@ -34,4 +34,4 @@ USER node
 ENV PORT=8080
 EXPOSE $PORT
 
-CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "prod" ]
