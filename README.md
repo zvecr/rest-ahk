@@ -9,6 +9,8 @@ REST service for compiling AutoHotkey scripts `.ahk` to `.exe`
 
 Behind the scenes, `wine` and `xvfb` are used to run `Ahk2Exe`, producing a lightweight Linux based container, deployable almost anywhere.
 
+For the UI, see the [zvecr/vue-ahk](https://github.com/zvecr/vue-ahk) project.
+
 ## Dependencies
 * nodejs (and npm)
 * wine
